@@ -34,4 +34,19 @@ public class Bank {
     public int numAccounts() {
         return accountMap.size();
     }
+    
+    public String getProfitLossOfBankOnNextMonth() {
+    	float differenceForAllAccounts = 0f;
+    	for (Account account : accountMap.values()) {
+            float differenceInNextMonth = account.valueNextMonth() - account.getBalance();
+            differenceForAllAccounts += differenceInNextMonth;
+        }
+    	if(differenceForAllAccounts > 0) {
+    		return "PROFIT";
+    	} else if (differenceForAllAccounts < 0) {
+    		return "LOSS";
+    	} else {
+    		return "NONE";
+    	}
+    }
 }

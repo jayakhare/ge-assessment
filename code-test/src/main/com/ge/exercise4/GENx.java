@@ -41,11 +41,21 @@ public class GENx {
     }
 
     public double thrustToWeightRatio() {
-        return takeoffThrust / wetWeight;
+        return takeoffThrust / dryWeight;
     }
 
     public String toString() {
         return ENGINE_MODEL + " SN: " + serialNumber;
     }
 
+    public double getFlightHoursBeforeRebuild() {
+        return (flightHoursBeforeRebuild - flightHours);
+    }
+    
+    public double getServiceLife() {
+    	double totalServiceLife = flightHoursBeforeRebuild * maxNumRebuilds;
+    	double usedServiceLife = (flightHoursBeforeRebuild * numRebuilds ) + flightHours;
+        return (totalServiceLife - usedServiceLife);
+    }
+    
 }

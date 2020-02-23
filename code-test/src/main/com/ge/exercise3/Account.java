@@ -7,8 +7,8 @@ public class Account {
 
     private static final Logger logger = LogManager.getLogger(Account.class);
 
-    private static float monthlyInterestRate = 1.01f;
-    private static float monthlyFee = 0.0f;
+    private float monthlyInterestRate = 1.01f; // non-static as it is different for Savings and Checking account
+    private float monthlyFee = 0.0f; // non-static as it is different for Savings and Checking account
 
     private String accountNumber;
     private String accountType;
@@ -24,15 +24,15 @@ public class Account {
     }
 
     public Account(String accountNumber, String accountType) {
-        new Account(accountNumber, accountType, 0.0f);
+        this(accountNumber, accountType, 0.0f); // this is used to call constructor of the same class
     }
 
     public Account(String accountNumber) {
-        new Account(accountNumber, "Savings", 0.0f);
+        this(accountNumber, "Savings", 0.0f); // this is used to call constructor of the same class
     }
 
     public float valueNextMonth() {
-        return (balance * monthlyInterestRate) - monthlyFee;
+    	return (balance * monthlyInterestRate) - monthlyFee;
     }
 
     @Override
@@ -64,8 +64,23 @@ public class Account {
         balance += amount;
     }
 
-    public void withdraw(float amount) {
-        balance -= amount;
+    public String withdraw(float amount) {
+    	if(this.accountType == "Checking") {
+    		if(balance - amount < -100) {
+    			return "Failure";
+    		} else {
+    			balance -= amount;
+        		return "Success";
+    		}
+    	} else if(this.accountType == "Savings"){    		
+    		if(balance - amount < 0) {
+    			return "Failure";
+    		} else {
+    			balance -= amount;
+        		return "Success";
+    		}
+    	}
+    	return "";
     }
 
     public float getMonthlyInterestRate() {
@@ -73,7 +88,7 @@ public class Account {
     }
 
     public void setMonthlyInterestRate(float monthlyInterestRate) {
-        this.monthlyInterestRate = monthlyInterestRate;
+    	this.monthlyInterestRate = monthlyInterestRate;
     }
 
     public float getMonthlyFee() {
@@ -81,7 +96,7 @@ public class Account {
     }
 
     public void setMonthlyFee(float monthlyFee) {
-        this.monthlyFee = monthlyFee;
+    	this.monthlyFee = monthlyFee;
     }
 
     public String getAccountNumber() {

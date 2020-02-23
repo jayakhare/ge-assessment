@@ -43,4 +43,26 @@ public class BankTest {
         bank.withdrawFromAccount("004", 100.0f);
         assertEquals(0.0f, account.getBalance(), 0.01);
     }
+    
+    @Test
+    public void getProfitLossOfBankOnNextMonthTest() {
+        Account account = new Account("001", "Checking", 100.0f);
+        bank.addAccount(account);
+        account = new Account("002", "Checking", 100.0f);
+        account.setMonthlyFee(10.0f);
+        bank.addAccount(account);
+        account = new Account("003", "Checking", 100.0f);
+        account.setMonthlyInterestRate(1.05f);
+        bank.addAccount(account);
+        account = new Account("004", "Savings", 100.0f);
+        bank.addAccount(account);
+        account = new Account("005", "Savings", 100.0f);
+        account.setMonthlyFee(10.0f);
+        bank.addAccount(account);
+        account = new Account("006", "Savings", 100.0f);
+        account.setMonthlyFee(10.0f);
+        bank.addAccount(account);
+        
+        assertEquals("LOSS", bank.getProfitLossOfBankOnNextMonth());
+    }
 }

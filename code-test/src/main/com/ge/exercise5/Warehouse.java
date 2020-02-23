@@ -25,8 +25,11 @@ public class Warehouse {
         for (Item item : items) {
             if (item.getType() != AGEABLE && item.getType() != RARE) {
                 if (item.getValue() > 0) {
-                    if (item.getType() == NORMAL) {
+                    if (item.getType() == NORMAL || item.getType() == PERISHABLE) {
                         item.setValue(item.getValue() - 1);
+                    }
+                    if (item.getValue() > 0 && item.getType() == PERISHABLE) {
+                        item.setValue(item.getValue() - 1); // Reducing twice the normal rate
                     }
                 }
             } else if (item.getType() != NORMAL && item.getType() != AGEABLE && item.getType() != RARE) {
@@ -55,6 +58,9 @@ public class Warehouse {
                         if (item.getValue() > 0) {
                             if (item.getType() != PRECIOUS) {
                                 item.setValue(item.getValue() - 1);
+                                if (item.getValue() > 0 && item.getType() == PERISHABLE) {
+                                    item.setValue(item.getValue() - 1); // Reducing twice the normal rate
+                                }
                             }
                         }
                     } else {
